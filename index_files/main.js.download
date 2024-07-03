@@ -1,0 +1,153 @@
+// Collapsible navigation menu
+
+const collapsibles = document.querySelectorAll(".collapsible");
+collapsibles.forEach((item) =>
+  item.addEventListener("click", function () {
+    this.classList.toggle("collapsible--expanded");
+  })
+);
+
+const collapsibles_item = document.querySelectorAll(".collapsible-item");
+
+collapsibles_item.forEach((item) =>
+  item.addEventListener("click", function () {
+    // Collapse all items
+    collapsibles_item.forEach((otherItem) => {
+      if (otherItem !== item) {
+        otherItem.classList.remove("collapsible--expanded--item");
+      }
+    });
+
+    // Toggle the clicked item
+    this.classList.toggle("collapsible--expanded--item");
+  })
+);
+
+/*
+
+toggle is a method of classList that adds the specified class
+if it's not present,
+and removes it if it is. In this case, 
+it toggles the class "collapsible--expanded" on the clicked element.
+ 
+*/
+
+// Image Slide JsCode
+
+let slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides((slideIndex += n));
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides((slideIndex = n));
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {
+    slideIndex = 1;
+  }
+  if (n < 1) {
+    slideIndex = slides.length;
+  }
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex - 1].style.display = "block";
+  dots[slideIndex - 1].className += " active";
+}
+
+//order page Js code
+
+// function checkout() {
+//   let cType = document.getElementById("courierType").value;
+//   let sType = document.getElementById("serviceType").value;
+//   let weight = document.getElementById("weight").value;
+//   let cCharges = 0;
+//   let sCharges = 0;
+//   let wCharges = 0;
+//   let totalChrages;
+//   let addCharges = 550;
+
+//   // Calculate courier charges
+//   if (cType == 1) {
+//     cCharges = 2500;
+//   } else if (cType == 2) {
+//     cCharges = 10000;
+//   } else if (cType == 3) {
+//     cCharges = 4000;
+//   }
+
+//   document.getElementById("c_typeCharge").value = "Rs " + cCharges;
+
+//   // Calculate service charges
+//   if (sType == 1) {
+//     sCharges = 2000;
+//   } else if (sType == 2) {
+//     sCharges = 2500;
+//   }
+
+//   document.getElementById("s_typeCharges").value = "Rs " + sCharges;
+
+//   // Calculate weight charges
+//   if (weight == 1) {
+//     wCharges = 1000;
+//   } else if (weight == 2) {
+//     wCharges = 1500;
+//   } else if (weight == 3) {
+//     wCharges = 2000;
+//   } else if (weight == 4) {
+//     wCharges = 2500;
+//   } else if (weight == 5) {
+//     wCharges = 7000;
+//   }
+
+//   document.getElementById("weightCharges").value = "Rs " + wCharges;
+//   document.getElementById("addCharges").value = "Rs " + addCharges;
+
+//   totalChrages = sCharges + cCharges + wCharges + addCharges;
+//   document.getElementById("totalCharges").value =
+//     "Rs " + totalChrages.toFixed(2);
+
+//   return false;
+// }
+
+// Form validation
+
+function validation() {
+  const senderNumber = document.getElementById("sender_number").value.trim();
+  const receiverNumber = document
+    .getElementById("receiver_number")
+    .value.trim();
+
+  if (/^\d{10}$/.test(senderNumber)) {
+    if (/^\d{10}$/.test(receiverNumber)) {
+      return true;
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Please enter valid Receiver contact number",
+        text: "<b>Contact number must be 10 digits<b>",
+      });
+      return false;
+    }
+  } else {
+    Swal.fire({
+      icon: "error",
+      title: "Please enter valid Sender contact number",
+      text: "<b>Contact number must be 10 digits<b>",
+    });
+
+    return false;
+  }
+}
